@@ -1,0 +1,7 @@
+c:\users\jpdottfranca\source\repos\Socket Communication\Server\bin\Debug\Server.exe.config
+c:\users\jpdottfranca\source\repos\Socket Communication\Server\bin\Debug\Server.exe
+c:\users\jpdottfranca\source\repos\Socket Communication\Server\bin\Debug\Server.pdb
+c:\users\jpdottfranca\source\repos\Socket Communication\Server\obj\Debug\Server.csprojAssemblyReference.cache
+c:\users\jpdottfranca\source\repos\Socket Communication\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
+c:\users\jpdottfranca\source\repos\Socket Communication\Server\obj\Debug\Server.exe
+c:\users\jpdottfranca\source\repos\Socket Communication\Server\obj\Debug\Server.pdb

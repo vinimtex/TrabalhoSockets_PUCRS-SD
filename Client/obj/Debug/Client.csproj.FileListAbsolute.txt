@@ -1,0 +1,6 @@
+c:\users\jpdottfranca\source\repos\Socket Communication\Client\bin\Debug\Client.exe.config
+c:\users\jpdottfranca\source\repos\Socket Communication\Client\bin\Debug\Client.exe
+c:\users\jpdottfranca\source\repos\Socket Communication\Client\bin\Debug\Client.pdb
+c:\users\jpdottfranca\source\repos\Socket Communication\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
+c:\users\jpdottfranca\source\repos\Socket Communication\Client\obj\Debug\Client.exe
+c:\users\jpdottfranca\source\repos\Socket Communication\Client\obj\Debug\Client.pdb
