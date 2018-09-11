@@ -8,7 +8,6 @@ namespace Server
     class Program
     {
         const int PORT_NO = 2201;
-        const string SERVER_IP = "127.0.0.1";
         static Socket serverSocket;
         static void Main(string[] args)
         {

@@ -8,17 +8,24 @@ namespace Client
     class Program
     {
         const int PORT_NO = 2201;
-        const string SERVER_IP = "127.0.0.1";
+        static string SERVER_IP = string.Empty;
         static Socket clientSocket; //put here
         static void Main(string[] args)
         {
+            Console.Write("Type the Server IP: ");
+            SERVER_IP = Console.ReadLine();
+
+
             //Similarly, start defining your client socket as soon as you start. 
             clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             loopConnect(3, 3); //for failure handling
+            Console.Write("Success! You are connected with the server");
             string result = "";
             do
             {
-                result = Console.ReadLine(); 
+                Console.Clear();
+                Console.WriteLine("Type something...");
+                result = Console.ReadLine();
                 if (result.ToLower().Trim() != "hadouken")
                 {
                     byte[] bytes = Encoding.ASCII.GetBytes(result); 

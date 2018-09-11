@@ -5,3 +5,10 @@ c:\users\jpdottfranca\source\repos\Socket Communication\Server\obj\Debug\Server.
 c:\users\jpdottfranca\source\repos\Socket Communication\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
 c:\users\jpdottfranca\source\repos\Socket Communication\Server\obj\Debug\Server.exe
 c:\users\jpdottfranca\source\repos\Socket Communication\Server\obj\Debug\Server.pdb
+H:\sisdistribuidos\TrabalhoSockets_PUCRS-SD\Server\bin\Debug\Server.exe.config
+H:\sisdistribuidos\TrabalhoSockets_PUCRS-SD\Server\bin\Debug\Server.exe
+H:\sisdistribuidos\TrabalhoSockets_PUCRS-SD\Server\bin\Debug\Server.pdb
+H:\sisdistribuidos\TrabalhoSockets_PUCRS-SD\Server\obj\Debug\Server.csprojResolveAssemblyReference.cache
+H:\sisdistribuidos\TrabalhoSockets_PUCRS-SD\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
+H:\sisdistribuidos\TrabalhoSockets_PUCRS-SD\Server\obj\Debug\Server.exe
+H:\sisdistribuidos\TrabalhoSockets_PUCRS-SD\Server\obj\Debug\Server.pdb
