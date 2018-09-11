@@ -4,3 +4,10 @@ c:\users\jpdottfranca\source\repos\Socket Communication\Client\bin\Debug\Client.
 c:\users\jpdottfranca\source\repos\Socket Communication\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
 c:\users\jpdottfranca\source\repos\Socket Communication\Client\obj\Debug\Client.exe
 c:\users\jpdottfranca\source\repos\Socket Communication\Client\obj\Debug\Client.pdb
+C:\Users\16204049\Desktop\TrabalhoSockets_PUCRS-SD\Client\bin\Debug\Client.exe.config
+C:\Users\16204049\Desktop\TrabalhoSockets_PUCRS-SD\Client\bin\Debug\Client.exe
+C:\Users\16204049\Desktop\TrabalhoSockets_PUCRS-SD\Client\bin\Debug\Client.pdb
+C:\Users\16204049\Desktop\TrabalhoSockets_PUCRS-SD\Client\obj\Debug\Client.csprojResolveAssemblyReference.cache
+C:\Users\16204049\Desktop\TrabalhoSockets_PUCRS-SD\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
+C:\Users\16204049\Desktop\TrabalhoSockets_PUCRS-SD\Client\obj\Debug\Client.exe
+C:\Users\16204049\Desktop\TrabalhoSockets_PUCRS-SD\Client\obj\Debug\Client.pdb
