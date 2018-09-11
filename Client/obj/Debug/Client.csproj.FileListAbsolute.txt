@@ -4,6 +4,7 @@ c:\users\jpdottfranca\source\repos\Socket Communication\Client\bin\Debug\Client.
 c:\users\jpdottfranca\source\repos\Socket Communication\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
 c:\users\jpdottfranca\source\repos\Socket Communication\Client\obj\Debug\Client.exe
 c:\users\jpdottfranca\source\repos\Socket Communication\Client\obj\Debug\Client.pdb
+<<<<<<< HEAD
 H:\sisdistribuidos\TrabalhoSockets_PUCRS-SD\Client\bin\Debug\Client.exe.config
 H:\sisdistribuidos\TrabalhoSockets_PUCRS-SD\Client\bin\Debug\Client.exe
 H:\sisdistribuidos\TrabalhoSockets_PUCRS-SD\Client\bin\Debug\Client.pdb
@@ -11,3 +12,12 @@ H:\sisdistribuidos\TrabalhoSockets_PUCRS-SD\Client\obj\Debug\Client.csprojResolv
 H:\sisdistribuidos\TrabalhoSockets_PUCRS-SD\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
 H:\sisdistribuidos\TrabalhoSockets_PUCRS-SD\Client\obj\Debug\Client.exe
 H:\sisdistribuidos\TrabalhoSockets_PUCRS-SD\Client\obj\Debug\Client.pdb
+=======
+C:\Users\16204049\Desktop\TrabalhoSockets_PUCRS-SD\Client\bin\Debug\Client.exe.config
+C:\Users\16204049\Desktop\TrabalhoSockets_PUCRS-SD\Client\bin\Debug\Client.exe
+C:\Users\16204049\Desktop\TrabalhoSockets_PUCRS-SD\Client\bin\Debug\Client.pdb
+C:\Users\16204049\Desktop\TrabalhoSockets_PUCRS-SD\Client\obj\Debug\Client.csprojResolveAssemblyReference.cache
+C:\Users\16204049\Desktop\TrabalhoSockets_PUCRS-SD\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
+C:\Users\16204049\Desktop\TrabalhoSockets_PUCRS-SD\Client\obj\Debug\Client.exe
+C:\Users\16204049\Desktop\TrabalhoSockets_PUCRS-SD\Client\obj\Debug\Client.pdb
+>>>>>>> a13a1e0beeaa18f511d2cadf8aa0d50a40ff0478

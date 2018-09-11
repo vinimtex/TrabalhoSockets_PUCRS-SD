@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Server
@@ -8,10 +10,16 @@ namespace Server
     class Program
     {
         const int PORT_NO = 2201;
+<<<<<<< HEAD
+=======
+        static string ipAddress = Dns.GetHostAddresses("")[3].ToString();
+>>>>>>> a13a1e0beeaa18f511d2cadf8aa0d50a40ff0478
         static Socket serverSocket;
+        static Dictionary<string, List<Resource>> clientMap = new Dictionary<string, List<Resource>(); 
+
         static void Main(string[] args)
         {
-            Console.WriteLine("Listening...");
+            Console.WriteLine("Listening on "+ ipAddress);
 
             // Create a new socket
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -24,7 +32,7 @@ namespace Server
 
             // Define acceptCallback method as a callback to be called when received a client message
             serverSocket.BeginAccept(new AsyncCallback(acceptCallback), null);
-
+            Console.WriteLine();
             string result = "";
             do
             {
@@ -68,16 +76,20 @@ namespace Server
                     int received = socket.EndReceive(result);
                     if (received > 0)
                     {
-                        byte[] data = new byte[received]; //the data is in the byte[] format, not string!
+                        byte[] data = new byte[received]; 
                         Buffer.BlockCopy(buffer, 0, data, 0, data.Length); //There are several way to do this according to https://stackoverflow.com/questions/5099604/any-faster-way-of-copying-arrays-in-c in general, System.Buffer.memcpyimpl is the fastest
-                        //DO SOMETHING ON THE DATA int byte[]!! Yihaa!!
-                        Console.WriteLine(Encoding.UTF8.GetString(data)); //Here I just print it, but you need to do something else                     
+                                                                           
 
-                        //Message retrieval part
-                        //Suppose you only want to declare that you receive data from a client to that client
-                        string msg = "I receive your message on: " + DateTime.Now;
-                        socket.Send(Encoding.ASCII.GetBytes(msg)); //Note that you actually send data in byte[]
-                        Console.WriteLine("I sent this message to the client: " + msg);
+                        string clientData = Encoding.UTF8.GetString(data);
+                        string clientAddress = (socket.RemoteEndPoint as IPEndPoint).Address.ToString();
+
+                        AddResource(clientAddress, clientData);
+
+                        Console.WriteLine(clientData);
+
+
+                        string msg = "Tafarel";
+                        socket.Send(Encoding.ASCII.GetBytes(msg));  
 
                         receiveAttempt = 0; //reset receive attempt
                         socket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(receiveCallback), socket); //repeat beginReceive
@@ -99,6 +111,20 @@ namespace Server
                 Console.WriteLine("receiveCallback fails with exception! " + e.ToString());
             }
         }
+
+        private void AddResource(string ClientAddress, string ClientData)
+        {
+            var a = SHA256.Create("joao");
+            //string Hash = GenerateHash(fileName, ipClient)
+            //Resource res = new Resource {FileName = ClientData }
+           
+
+        }
+
+        //private string GenerateHash(string fileName, string ipAddress)
+        //{
+            
+        //}
 
     }
 }
