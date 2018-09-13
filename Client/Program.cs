@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Client
@@ -10,6 +12,8 @@ namespace Client
         const int PORT_NO = 2201;
         static string SERVER_IP = string.Empty;
         static Socket clientSocket; //put here
+        static string ipAddress = Dns.GetHostAddresses("")[3].ToString();
+
         static void Main(string[] args)
         {
             Console.Write("Type the Server IP: ");
@@ -24,15 +28,43 @@ namespace Client
             do
             {
                 Console.Clear();
-                Console.WriteLine("Type something...");
+                Console.WriteLine("Type upload or get...");
                 result = Console.ReadLine();
+
+                switch(result)
+                {
+                    case "upload":
+                        Console.Write("Type the amount of files to upload: ");
+                        string amountInput = Console.ReadLine();
+                        int amount = int.Parse(amountInput);
+                        
+                        for (int i = 1; i <= amount; i++)
+                        {
+                            Console.WriteLine("What is the path of " + i  + "° file?");
+                            string pathInput = Console.ReadLine();
+                            if (SendFile(pathInput)) {
+                                Console.WriteLine("File " + pathInput + " sent with success!");
+                            } 
+
+                        }
+                        break;
+                    case "get":
+                        Console.Write("What is the name of the file you want? ");
+                        //@TODO
+                        break;
+                }
+
+
                 if (result.ToLower().Trim() != "hadouken")
                 {
-                    byte[] bytes = Encoding.ASCII.GetBytes(result); 
-
-                    clientSocket.Send(bytes);
+                    clientSocket.Send(stringToBytes(result));
                 }
             } while (result.ToLower().Trim() != "hadouken");
+        }
+
+        static byte[] stringToBytes(string text)
+        {
+            return Encoding.ASCII.GetBytes(text);
         }
 
         static void loopConnect(int noOfRetry, int attemptPeriodInSeconds)
@@ -120,6 +152,23 @@ namespace Client
             { // this exception will happen when "this" is be disposed...
                 Console.WriteLine("receiveCallback is failed! " + e.ToString());
             }
+        }
+
+        static private string CreateHash(byte[] fileBytes)
+        {
+            var a = SHA256.Create("joao");
+
+            //string Hash = GenerateHash(fileName, ipClient)
+            //Resource res = new Resource {FileName = ClientData }
+            return a.ComputeHash(fileBytes).ToString();
+
+        }
+
+        static private Boolean SendFile(string fileName)
+        {
+            byte[] fileBytes = File.ReadAllBytes(fileName);
+            clientSocket.Send(stringToBytes("upload:" + CreateHash(fileBytes) + ";" + fileName + ";" + ipAddress));
+            return true;
         }
     }
 }

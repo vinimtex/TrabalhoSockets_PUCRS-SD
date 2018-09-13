@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Server
 {
@@ -13,7 +14,8 @@ namespace Server
         static string ipAddress = Dns.GetHostAddresses("")[3].ToString();
 
         static Socket serverSocket;
-        static Dictionary<string, List<Resource>> clientMap = new Dictionary<string, List<Resource>(); 
+        static Dictionary<string, List<Resource>> resourcesMap = new Dictionary<string, List<Resource>>();
+        static List<string> clientsLogged = new List<string>();
 
         static void Main(string[] args)
         {
@@ -36,6 +38,7 @@ namespace Server
             {
                 // Define the Ryu's hadouken to be a key to finish the server from client
                 result = Console.ReadLine();
+
             } while (result.ToLower().Trim() != "hadouken");
         }
 
@@ -80,6 +83,37 @@ namespace Server
 
                         string clientData = Encoding.UTF8.GetString(data);
                         string clientAddress = (socket.RemoteEndPoint as IPEndPoint).Address.ToString();
+                        //@TODO[Refactor] split this area into various functions
+                        switch(clientData)
+                        {
+                            case "login":
+                                clientsLogged.Add(clientAddress);
+                                socket.Send(Encoding.ASCII.GetBytes("success"));
+                                break;
+                            case var isUpload when new Regex(@"\bupload\b").IsMatch(isUpload):
+                                string[] uploadInput = clientData.Split(';');
+                                
+                                if(uploadInput.Length == 3)
+                                {
+
+                                    if(clientsLogged.Contains(clientAddress))
+                                    {
+                                        
+
+
+                                    } else
+                                    {
+                                        socket.Send(Encoding.ASCII.GetBytes("failed to authenticate, before upload, you will need to login"));
+                                    }
+
+                                } else
+                                {
+                                    socket.Send(Encoding.ASCII.GetBytes("failed to upload"));
+                                }
+
+                                break;
+                        }
+                        //@TODO end todo
 
                         AddResource(clientAddress, clientData);
 
@@ -110,19 +144,14 @@ namespace Server
             }
         }
 
-        private void AddResource(string ClientAddress, string ClientData)
+        static private void AddResource(string Hash, string FileName, string ClientIp)
         {
-            var a = SHA256.Create("joao");
-            //string Hash = GenerateHash(fileName, ipClient)
-            //Resource res = new Resource {FileName = ClientData }
-           
+            Resource r = new Resource();
+            r.FileName = FileName;
+            r.Hash = Hash;
+            r.FromIp = ClientIp;
 
         }
-
-        //private string GenerateHash(string fileName, string ipAddress)
-        //{
-            
-        //}
 
     }
 }

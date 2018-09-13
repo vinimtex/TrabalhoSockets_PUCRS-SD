@@ -10,5 +10,6 @@ namespace Server
     {
         public String FileName { get; set; }
         public String Hash { get; set; }
+        public String FromIp { get; set; }
     }
 }
