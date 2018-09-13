@@ -10,10 +10,8 @@ namespace Server
     class Program
     {
         const int PORT_NO = 2201;
-<<<<<<< HEAD
-=======
         static string ipAddress = Dns.GetHostAddresses("")[3].ToString();
->>>>>>> a13a1e0beeaa18f511d2cadf8aa0d50a40ff0478
+
         static Socket serverSocket;
         static Dictionary<string, List<Resource>> clientMap = new Dictionary<string, List<Resource>(); 
 
