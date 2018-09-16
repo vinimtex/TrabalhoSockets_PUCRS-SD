@@ -16,6 +16,8 @@ namespace Client
 
         static void Main(string[] args)
         {
+            PeerListener.startListening();
+
             Console.Write("Type the Server IP: ");
             SERVER_IP = Console.ReadLine();
 
@@ -50,7 +52,8 @@ namespace Client
                         break;
                     case "get":
                         Console.Write("What is the name of the file you want? ");
-                        //@TODO
+                        string fileNameInput = Console.ReadLine();
+                        clientSocket.Send(stringToBytes("get:" + fileNameInput));
                         break;
                 }
 
@@ -128,11 +131,20 @@ namespace Client
                     {
                         receiveAttempt = 0;
                         byte[] data = new byte[received];
-                        Buffer.BlockCopy(buffer, 0, data, 0, data.Length); //There are several way to do this according to https://stackoverflow.com/questions/5099604/any-faster-way-of-copying-arrays-in-c in general, System.Buffer.memcpyimpl is the fastest
-                        //DO ANYTHING THAT YOU WANT WITH data, IT IS THE RECEIVED PACKET!
-                        //Notice that your data is not string! It is actually byte[]
-                        //For now I will just print it out
-                        Console.WriteLine("Server: " + Encoding.UTF8.GetString(data));
+                        Buffer.BlockCopy(buffer, 0, data, 0, data.Length);
+                        string serverResponse = Encoding.UTF8.GetString(data);
+
+                        if (serverResponse.Contains("FileFoundAt:"))
+                        {
+                            //@TODO Create a new socket to connect at port 2202 (PeerListener :D)
+                        } else
+                        {
+                            Console.WriteLine("Server: " + Encoding.UTF8.GetString(data));
+                        }
+                        
+
+                        
+
                         socket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(receiveCallback), socket);
                     }
                     else if (receiveAttempt < MAX_RECEIVE_ATTEMPT)

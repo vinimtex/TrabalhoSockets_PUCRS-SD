@@ -114,6 +114,30 @@ namespace Server
                                 }
 
                                 break;
+                            case var isGet when new Regex(@"\bget\b").IsMatch(isGet):
+                                string clientIp = String.Empty;
+                                foreach(KeyValuePair<string,List<Resource>> resources in resourcesMap)
+                                {
+                                    foreach(Resource resource in resources.Value)
+                                    {
+                                        if(resource.FileName.Equals(clientData))
+                                        {
+                                            clientIp = resource.FromIp;
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                if(clientIp.Length > 0)
+                                {
+                                    socket.Send(Encoding.ASCII.GetBytes("FileAt:" + clientIp));
+                                } else
+                                {
+                                    socket.Send(Encoding.ASCII.GetBytes("Error 404 file not found"));
+                                }
+                                   
+
+                                break;
                         }
                         //@TODO end todo
 
@@ -164,6 +188,5 @@ namespace Server
             }
 
         }
-
     }
 }
