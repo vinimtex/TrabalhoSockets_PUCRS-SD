@@ -14,7 +14,7 @@ namespace Server
         static string ipAddress = Dns.GetHostAddresses("")[3].ToString();
 
         static Socket serverSocket;
-        static Dictionary<string, List<Resource>> resourcesMap = new Dictionary<string, List<Resource>>();
+        static Dictionary<string, List<Resource>> resourcesMap = new Dictionary<string, List<Resource>>(); // key is the hash of file, the List<Resource>, is the list of devices that hosts that files...
         static List<string> clientsLogged = new List<string>();
 
         static void Main(string[] args)
@@ -93,13 +93,15 @@ namespace Server
                             case var isUpload when new Regex(@"\bupload\b").IsMatch(isUpload):
                                 string[] uploadInput = clientData.Split(';');
                                 
+                                
                                 if(uploadInput.Length == 3)
                                 {
 
                                     if(clientsLogged.Contains(clientAddress))
                                     {
-                                        
-
+                                        string hash = uploadInput[0].Split(':')[1];
+                                        string fileName = uploadInput[1];
+                                        AddResource(hash, fileName, clientAddress);
 
                                     } else
                                     {
@@ -115,7 +117,7 @@ namespace Server
                         }
                         //@TODO end todo
 
-                        AddResource(clientAddress, clientData);
+                        
 
                         Console.WriteLine(clientData);
 
@@ -150,6 +152,16 @@ namespace Server
             r.FileName = FileName;
             r.Hash = Hash;
             r.FromIp = ClientIp;
+
+            if (resourcesMap.ContainsKey(Hash))
+            {
+                resourcesMap[Hash].Add(r);
+            } else
+            {
+                List<Resource> newResourceList = new List<Resource>();
+                newResourceList.Add(r);
+                resourcesMap.Add(Hash, newResourceList);
+            }
 
         }
 
