@@ -2,8 +2,8 @@
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 
 namespace Client
 {
@@ -11,18 +11,19 @@ namespace Client
     {
         const int PORT_NO = 2201;
         static string SERVER_IP = string.Empty;
-        static Socket clientSocket; //put here
+        static Socket clientSocket;
         static string ipAddress = Dns.GetHostAddresses("")[3].ToString();
 
         static void Main(string[] args)
         {
-            PeerListener.startListening();
+            var listenerPeer = new Thread(new ThreadStart(PeerListener.startListening));
+            listenerPeer.Start();
 
             Console.Write("Type the Server IP: ");
             SERVER_IP = Console.ReadLine();
 
 
-            //Similarly, start defining your client socket as soon as you start. 
+            // Similarly, start defining your client socket as soon as you start. 
             clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             loopConnect(3, 3); //for failure handling
             Console.Write("Success! You are connected with the server");
@@ -33,20 +34,21 @@ namespace Client
                 Console.WriteLine("Type upload or get...");
                 result = Console.ReadLine();
 
-                switch(result)
+                switch (result)
                 {
                     case "upload":
                         Console.Write("Type the amount of files to upload: ");
                         string amountInput = Console.ReadLine();
                         int amount = int.Parse(amountInput);
-                        
+
                         for (int i = 1; i <= amount; i++)
                         {
-                            Console.WriteLine("What is the path of " + i  + "° file?");
+                            Console.WriteLine("What is the path of " + i + "° file?");
                             string pathInput = Console.ReadLine();
-                            if (SendFile(pathInput)) {
+                            if (SendFile(pathInput))
+                            {
                                 Console.WriteLine("File " + pathInput + " sent with success!");
-                            } 
+                            }
 
                         }
                         break;
@@ -116,20 +118,17 @@ namespace Client
             }
         }
 
-        const int MAX_RECEIVE_ATTEMPT = 10;
-        static int receiveAttempt = 0;
         private static void receiveCallback(IAsyncResult result)
         {
-            System.Net.Sockets.Socket socket = null;
+            Socket socket = null;
             try
             {
-                socket = (System.Net.Sockets.Socket)result.AsyncState;
+                socket = (Socket)result.AsyncState;
                 if (socket.Connected)
                 {
                     int received = socket.EndReceive(result);
                     if (received > 0)
                     {
-                        receiveAttempt = 0;
                         byte[] data = new byte[received];
                         Buffer.BlockCopy(buffer, 0, data, 0, data.Length);
                         string serverResponse = Encoding.UTF8.GetString(data);
@@ -137,25 +136,15 @@ namespace Client
                         if (serverResponse.Contains("FileFoundAt:"))
                         {
                             //@TODO Create a new socket to connect at port 2202 (PeerListener :D)
-                        } else
-                        {
-                            Console.WriteLine("Server: " + Encoding.UTF8.GetString(data));
                         }
-                        
+                        else
+                            Console.WriteLine("Server: " + Encoding.UTF8.GetString(data));
 
-                        
-
-                        socket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(receiveCallback), socket);
-                    }
-                    else if (receiveAttempt < MAX_RECEIVE_ATTEMPT)
-                    { //not exceeding the max attempt, try again
-                        ++receiveAttempt;
                         socket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(receiveCallback), socket);
                     }
                     else
-                    { //completely fails!
+                    { //  fails!
                         Console.WriteLine("receiveCallback is failed!");
-                        receiveAttempt = 0;
                         clientSocket.Close();
                     }
                 }
@@ -168,12 +157,7 @@ namespace Client
 
         static private string CreateHash(byte[] fileBytes)
         {
-            var a = SHA256.Create("joao");
-
-            //string Hash = GenerateHash(fileName, ipClient)
-            //Resource res = new Resource {FileName = ClientData }
-            return a.ComputeHash(fileBytes).ToString();
-
+            return Convert.ToBase64String(fileBytes);
         }
 
         static private Boolean SendFile(string fileName)

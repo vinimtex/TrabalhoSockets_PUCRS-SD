@@ -1,24 +1,7 @@
-c:\users\jpdottfranca\source\repos\Socket Communication\Server\bin\Debug\Server.exe.config
-c:\users\jpdottfranca\source\repos\Socket Communication\Server\bin\Debug\Server.exe
-c:\users\jpdottfranca\source\repos\Socket Communication\Server\bin\Debug\Server.pdb
-c:\users\jpdottfranca\source\repos\Socket Communication\Server\obj\Debug\Server.csprojAssemblyReference.cache
-c:\users\jpdottfranca\source\repos\Socket Communication\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
-c:\users\jpdottfranca\source\repos\Socket Communication\Server\obj\Debug\Server.exe
-c:\users\jpdottfranca\source\repos\Socket Communication\Server\obj\Debug\Server.pdb
-<<<<<<< HEAD
-H:\sisdistribuidos\TrabalhoSockets_PUCRS-SD\Server\bin\Debug\Server.exe.config
-H:\sisdistribuidos\TrabalhoSockets_PUCRS-SD\Server\bin\Debug\Server.exe
-H:\sisdistribuidos\TrabalhoSockets_PUCRS-SD\Server\bin\Debug\Server.pdb
-H:\sisdistribuidos\TrabalhoSockets_PUCRS-SD\Server\obj\Debug\Server.csprojResolveAssemblyReference.cache
-H:\sisdistribuidos\TrabalhoSockets_PUCRS-SD\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
-H:\sisdistribuidos\TrabalhoSockets_PUCRS-SD\Server\obj\Debug\Server.exe
-H:\sisdistribuidos\TrabalhoSockets_PUCRS-SD\Server\obj\Debug\Server.pdb
-=======
-C:\Users\16204049\Desktop\TrabalhoSockets_PUCRS-SD\Server\bin\Debug\Server.exe.config
-C:\Users\16204049\Desktop\TrabalhoSockets_PUCRS-SD\Server\bin\Debug\Server.exe
-C:\Users\16204049\Desktop\TrabalhoSockets_PUCRS-SD\Server\bin\Debug\Server.pdb
-C:\Users\16204049\Desktop\TrabalhoSockets_PUCRS-SD\Server\obj\Debug\Server.csprojResolveAssemblyReference.cache
-C:\Users\16204049\Desktop\TrabalhoSockets_PUCRS-SD\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
-C:\Users\16204049\Desktop\TrabalhoSockets_PUCRS-SD\Server\obj\Debug\Server.exe
-C:\Users\16204049\Desktop\TrabalhoSockets_PUCRS-SD\Server\obj\Debug\Server.pdb
->>>>>>> a13a1e0beeaa18f511d2cadf8aa0d50a40ff0478
+C:\Users\JpDottFranca\Desktop\TrabalhoSockets_PUCRS-SD\Server\bin\Debug\Server.exe.config
+C:\Users\JpDottFranca\Desktop\TrabalhoSockets_PUCRS-SD\Server\bin\Debug\Server.exe
+C:\Users\JpDottFranca\Desktop\TrabalhoSockets_PUCRS-SD\Server\bin\Debug\Server.pdb
+C:\Users\JpDottFranca\Desktop\TrabalhoSockets_PUCRS-SD\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
+C:\Users\JpDottFranca\Desktop\TrabalhoSockets_PUCRS-SD\Server\obj\Debug\Server.exe
+C:\Users\JpDottFranca\Desktop\TrabalhoSockets_PUCRS-SD\Server\obj\Debug\Server.pdb
+C:\Users\JpDottFranca\Desktop\TrabalhoSockets_PUCRS-SD\Server\obj\Debug\Server.csprojAssemblyReference.cache

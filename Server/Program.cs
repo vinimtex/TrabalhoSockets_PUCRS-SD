@@ -19,11 +19,11 @@ namespace Server
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Listening on "+ ipAddress);
+            Console.WriteLine("Listening on " + ipAddress);
 
             // Create a new socket
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            
+
             // Associates the socket with a defined end-point
             serverSocket.Bind(new IPEndPoint(IPAddress.Any, PORT_NO));
 
@@ -43,12 +43,11 @@ namespace Server
         }
 
         private const int BUFFER_SIZE = 4096;
-        private static byte[] buffer = new byte[BUFFER_SIZE]; //buffer size is limited to BUFFER_SIZE per message
+        private static byte[] buffer = new byte[BUFFER_SIZE];
 
         // Method that handle messages sent from clients
         private static void acceptCallback(IAsyncResult result)
-        { 
-            //if the buffer is old, then there might already be something there...
+        {
             Socket socket = null;
             try
             {
@@ -64,63 +63,61 @@ namespace Server
             }
         }
 
-        const int MAX_RECEIVE_ATTEMPT = 10;
-        static int receiveAttempt = 0; //this is not fool proof, obviously, since actually you must have multiple of this for multiple clients, but for the sake of simplicity I put this
         private static void receiveCallback(IAsyncResult result)
         {
             Socket socket = null;
+            string callbackMessage = String.Empty;
             try
             {
                 socket = (Socket)result.AsyncState; //this is to get the sender
                 if (socket.Connected)
-                { //simple checking
+                {
                     int received = socket.EndReceive(result);
                     if (received > 0)
                     {
-                        byte[] data = new byte[received]; 
-                        Buffer.BlockCopy(buffer, 0, data, 0, data.Length); //There are several way to do this according to https://stackoverflow.com/questions/5099604/any-faster-way-of-copying-arrays-in-c in general, System.Buffer.memcpyimpl is the fastest
-                                                                           
+                        byte[] data = new byte[received];
+                        Buffer.BlockCopy(buffer, 0, data, 0, data.Length);
+
 
                         string clientData = Encoding.UTF8.GetString(data);
                         string clientAddress = (socket.RemoteEndPoint as IPEndPoint).Address.ToString();
                         //@TODO[Refactor] split this area into various functions
-                        switch(clientData)
+                        switch (clientData)
                         {
                             case "login":
                                 clientsLogged.Add(clientAddress);
                                 socket.Send(Encoding.ASCII.GetBytes("success"));
                                 break;
-                            case var isUpload when new Regex(@"\bupload\b").IsMatch(isUpload):
+                            case var isUpload when isUpload.ToUpper().Contains("UPLOAD"):
+                                callbackMessage = "Request to upload resource processed.";
                                 string[] uploadInput = clientData.Split(';');
-                                
-                                
-                                if(uploadInput.Length == 3)
+
+                                if (uploadInput.Length == 3)
                                 {
 
-                                    if(clientsLogged.Contains(clientAddress))
+                                    if (clientsLogged.Contains(clientAddress))
                                     {
                                         string hash = uploadInput[0].Split(':')[1];
                                         string fileName = uploadInput[1];
                                         AddResource(hash, fileName, clientAddress);
 
-                                    } else
-                                    {
-                                        socket.Send(Encoding.ASCII.GetBytes("failed to authenticate, before upload, you will need to login"));
                                     }
+                                    else
+                                        socket.Send(Encoding.ASCII.GetBytes("failed to authenticate, before upload, you will need to login"));
 
-                                } else
-                                {
-                                    socket.Send(Encoding.ASCII.GetBytes("failed to upload"));
                                 }
+                                else
+                                    socket.Send(Encoding.ASCII.GetBytes("failed to upload"));
 
                                 break;
-                            case var isGet when new Regex(@"\bget\b").IsMatch(isGet):
+                            case var isGet when isGet.ToUpper().Contains("GET"):
+                                callbackMessage = "Request to get resource processed.";
                                 string clientIp = String.Empty;
-                                foreach(KeyValuePair<string,List<Resource>> resources in resourcesMap)
+                                foreach (KeyValuePair<string, List<Resource>> resources in resourcesMap)
                                 {
-                                    foreach(Resource resource in resources.Value)
+                                    foreach (Resource resource in resources.Value)
                                     {
-                                        if(resource.FileName.Equals(clientData))
+                                        if (resource.FileName.Equals(clientData))
                                         {
                                             clientIp = resource.FromIp;
                                             break;
@@ -128,40 +125,26 @@ namespace Server
                                     }
                                 }
 
-                                if(clientIp.Length > 0)
+                                if (clientIp.Length > 0)
                                 {
                                     socket.Send(Encoding.ASCII.GetBytes("FileAt:" + clientIp));
-                                } else
-                                {
-                                    socket.Send(Encoding.ASCII.GetBytes("Error 404 file not found"));
                                 }
-                                   
+                                else
+                                    socket.Send(Encoding.ASCII.GetBytes("Error 404 file not found"));
 
                                 break;
                         }
-                        //@TODO end todo
-
-                        
 
                         Console.WriteLine(clientData);
 
+                        socket.Send(Encoding.ASCII.GetBytes(callbackMessage));
 
-                        string msg = "Tafarel";
-                        socket.Send(Encoding.ASCII.GetBytes(msg));  
-
-                        receiveAttempt = 0; //reset receive attempt
-                        socket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(receiveCallback), socket); //repeat beginReceive
-                    }
-                    else if (receiveAttempt < MAX_RECEIVE_ATTEMPT)
-                    { //fail but not exceeding max attempt, repeats
-                        ++receiveAttempt; //increase receive attempt;
                         socket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(receiveCallback), socket); //repeat beginReceive
                     }
                     else
-                    { //completely fails!
+                        // fails!
                         Console.WriteLine("receiveCallback fails!"); //don't repeat beginReceive
-                        receiveAttempt = 0; //reset this for the next connection
-                    }
+
                 }
             }
             catch (Exception e)
@@ -178,9 +161,8 @@ namespace Server
             r.FromIp = ClientIp;
 
             if (resourcesMap.ContainsKey(Hash))
-            {
                 resourcesMap[Hash].Add(r);
-            } else
+            else
             {
                 List<Resource> newResourceList = new List<Resource>();
                 newResourceList.Add(r);
